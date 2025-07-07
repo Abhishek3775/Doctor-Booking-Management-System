@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Outfit:wght@100..900&display=swap');
+
+*{
+  font-family: Outfit;
+}
+
+.active {
+    
+    text-decoration: underline ;
+    text-decoration-color: #5f6fff;
+    text-decoration-thickness:2px ;
+    
+  }
+  
+  ::-webkit-scrollbar{
+    display: none;
+  }
