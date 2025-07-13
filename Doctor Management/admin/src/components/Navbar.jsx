@@ -4,14 +4,17 @@ import { AdminContext } from '../context/AdminContext'
 import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
-  const { adminToken,setAdminToken} = useContext(AdminContext)
+  const { adminToken,setAdminToken,doctorToken,setDoctorToken} = useContext(AdminContext)
 
     const navigate = useNavigate("")
 
   const logout = ()=>{
     navigate('/')
     adminToken && setAdminToken('');
-    adminToken && localStorage.removeItem("adminToken")
+    adminToken && localStorage.removeItem("adminToken");
+    doctorToken && setDoctorToken('');
+    doctorToken && localStorage.removeItem("doctorToken")
+    
   }
 
   return (

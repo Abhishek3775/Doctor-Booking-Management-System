@@ -13,6 +13,7 @@ function Profile() {
   const [image, setImage] = useState(false);
 
   const updateUserProfileData = async () => {
+
     try {
       const formData = new FormData();
       formData.append("name", userData.name);
@@ -22,13 +23,17 @@ function Profile() {
       formData.append("dob", userData.dob);
       formData.append("address[line1]", userData.address.line1);
       formData.append("address[line2]", userData.address.line2);
+      formData.append("userId",userData._id)
 
       if (image) {
         formData.append("image", image);
       }
+      console.log("form DAta",formData)
+      for (let pair of formData.entries()) {
+  console.log(`${pair[0]}: ${pair[1]}`);
+}
 
-      const { data } = await axios.post(
-        backendUrl + "/api/user/update-profile",
+      const { data } = await axios.post("http://localhost:9000/api/user/update-profile",
         formData,
         {
           headers: {
@@ -36,12 +41,16 @@ function Profile() {
           },
         }
       );
+      console.log("hello ji ",data)
+
 
       if (data.success) {
         toast.success(data.message);
         await loadUserProfileData();
         setIsEdit(false);
       } else {
+        console.log(data)
+        console.log(data.message)
         toast.error(data.message);
       }
     } catch (error) {
@@ -49,6 +58,8 @@ function Profile() {
       toast.error(error.message);
     }
   };
+
+  // console.log(userData)
 
   return (
     userData && (
@@ -71,7 +82,10 @@ function Profile() {
                 )}
               </div>
               <input
-                onChange={(e) => setImage(e.target.files[0])}
+                onChange={(e) => {
+    console.log(e.target.files[0]); // Check this
+    setImage(e.target.files[0]);
+  }}
                 type="file"
                 id="image"
                 hidden
@@ -213,7 +227,7 @@ function Profile() {
 
               {isEdit ? (
                 <input
-                  type="date"
+                  type="text"
                   value={userData.dob}
                   onChange={(e) =>
                     setUserData((prev) => ({ ...prev, dob: e.target.value }))
@@ -235,7 +249,9 @@ function Profile() {
             {isEdit ? (
               <>
                 <button
-                  onClick={updateUserProfileData}
+                  onClick={()=>{
+                    updateUserProfileData()
+                  }}
                   className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
                 >
                   Save Information
@@ -260,6 +276,7 @@ function Profile() {
               </button>
             )}
           </div>
+          
         </div>
       </div>
     )

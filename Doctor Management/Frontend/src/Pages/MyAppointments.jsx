@@ -187,20 +187,29 @@ const navigate = useNavigate();
                 </button>
               )}
 
-              {!item.cancelled && (
+              {
+               item.cancelled ?(
+                <button className="text-sm text-red-500 text-center sm:min-w-48 py-2 border rounded ">
+                  This Appointment is cancelled
+                </button>
+              ):<button
+                  onClick={() => cancelAppointment(item._id)}
+                  className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-red-600 hover:text-white transition-all duration-500"
+                >
+                  Cancel Appointment
+                </button>
+              }
+
+              {/* {!item.cancelled && (
                 <button
                   onClick={() => cancelAppointment(item._id)}
                   className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-red-600 hover:text-white transition-all duration-500"
                 >
                   Cancel Appointment
                 </button>
-              )}
+              )} */}
 
-              {item.cancelled && (
-                <button className="text-sm text-red-500 text-center sm:min-w-48 py-2 border rounded ">
-                  This Appointment is cancelled
-                </button>
-              )}
+              
             </div>
           </div>
         ))}

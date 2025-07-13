@@ -1,21 +1,33 @@
 import React from "react";
 import { useContext } from "react";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { AdminContext } from "../../context/AdminContext";
 import { useEffect } from "react";
+import axios from "axios";
 import { assets } from "../../assets/assets";
 
+function DoctorAppointments() {
+  const {
+    backendUrl,
+    doctorToken,
+    appointments,
+    setAppointments,
+    slotDateFormat,
+    appointmentCancelFromDocSide,
+    completeAppointment,
+    fetchAppointmentsForDoctors
+ 
+  } = useContext(AdminContext);
 
-const AllAppointments = () => {
-  const { adminToken, appointments, getAllAppointments ,appointmentCancel,slotDateFormat} =
-    useContext(AdminContext);
 
-  //cancel appointments
+  // console.log("doctor token is fetching",doctorToken)
+
+  
 
   useEffect(() => {
-    if (adminToken) {
-      getAllAppointments();
-    }
-  }, [adminToken]);
+    fetchAppointmentsForDoctors();
+  }, [doctorToken]);
 
   return (
     <div className="w-full max-w-6xl m-5 ">
@@ -27,7 +39,7 @@ const AllAppointments = () => {
           <p>#</p>
           <p>Patient</p>
           <p>Date & Time</p>
-          <p>Doctor</p>
+          <p>payment</p>
           <p>Fees</p>
           <p>Actions</p>
         </div>
@@ -58,38 +70,46 @@ const AllAppointments = () => {
               {slotDateFormat(item.slotDate)}, {item.slotTime}
             </p>
 
-            {/* Doctor Info */}
-            <div className="flex items-center gap-2">
-              <img
-                src={item.docData.image}
-                alt="Doctor"
-                className="w-8 h-8 rounded-full object-cover"
-              />
-              <p className="hidden sm:block">{item.docData.name}</p>
-            </div>
+            {/*payment */}
+
+            <p className="text-sm border text-center w-10 rounded-lg">cash</p>
 
             {/* Fees */}
             <p className="text-sm">${item.docData.fees}</p>
 
-            {item.cancelled ? <p className="text-red-400 text-xs font-medium">Cancelled</p> : 
-             <img
-              src={assets.cancel_icon}
-              alt="Cancel"
-              className="w-6 sm:w-8 cursor-pointer"
-              onClick={()=>{
-                appointmentCancel(item._id)
-              }}
-            />
-            }
+            {/*actions image it is accepted or rejected */}
+
+         
+            <div className="flex gap-1">
+  {item.cancelled ? (
+    <p className="text-red-500 font-semibold">Cancelled</p>
+  ) : item.isCompleted ? (
+    <p className="text-green-500 font-semibold">Completed</p>
+  ) : (
+    <>
+      <img
+        src={assets.cancel_icon}
+        alt="Cancel"
+        className="w-6 sm:w-8 cursor-pointer"
+        onClick={() => appointmentCancelFromDocSide(item._id)}
+      />
+      <img
+        src={assets.tick_icon}
+        alt="Complete"
+        className="w-6 sm:w-8 cursor-pointer"
+        onClick={() => completeAppointment(item._id)}
+      />
+    </>
+  )}
+</div>
 
 
-           
-           
+
           </div>
         ))}
       </div>
     </div>
   );
-};
+}
 
-export default AllAppointments;
+export default DoctorAppointments;

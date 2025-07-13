@@ -6,6 +6,8 @@ import doctorModel from "../models/DoctorModel.js"
 import multer from "multer";
 import path from "path";
 import jwt from "jsonwebtoken"
+import appointmentModel from "../models/appointmentModel.js";
+import userModel from "../models/userModel.js";
 
 //api for adding doctor
 const addDoctor = async (req, res) => {
@@ -124,4 +126,82 @@ const allDoctors = async (req,res)=>{
   }
 }
 
-export { addDoctor, loginAdmin,allDoctors};
+//api to get all appointments list 
+
+const apppointmentsAdmin = async (req,res)=>{
+  try {
+    const appointments = await appointmentModel.find({});
+    return res.status(200).json({success:true,appointments})
+
+  } catch (error) {
+     console.log(error)
+     res.status(500).json({ success: false, message: error.message });
+  }
+}
+
+//api to cancel the appointments 
+
+ const appointmentCancel = async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+     console.log("appointment id ",appointmentId)
+    let appointmentData = await appointmentModel.findById(appointmentId);
+    if (!appointmentData) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Appointment not found" });
+    }
+
+    // ✅ Mark as cancelled
+    await appointmentModel.findByIdAndUpdate(appointmentId, {
+      cancelled: true,
+    });
+
+    // ✅ release doctor slot
+    const { docId, slotDate, slotTime } = appointmentData;
+    const doctorData = await doctorModel.findById(docId);
+    if (doctorData && doctorData.slots_booked[slotDate]) {
+      doctorData.slots_booked[slotDate] = doctorData.slots_booked[
+        slotDate
+      ].filter((e) => e !== slotTime);
+      await doctorModel.findByIdAndUpdate(docId, {
+        slots_booked: doctorData.slots_booked,
+      });
+    }
+
+    return res.json({ success: true, message: "Appointment Cancelled" });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error", error });
+  }
+};
+
+//api to get the admin dashboard data 
+
+const adminDashBoard = async (req,res)=>{
+try {
+  const doctors = await doctorModel.find({});
+  const users = await userModel.find({});
+  const appointments = await appointmentModel.find({});
+
+  const dashData = {
+    doctors:doctors.length,
+    patients:users.length,
+    appointments:appointments.length,
+    latestAppointments:appointments.reverse().slice(0,5)
+  }
+
+  return res.status(200).json({success:true,message:"dash Data fetched successfully",dashData})
+
+  
+} catch (error) {
+  console.log(error);
+  return res.status(500).json({success:false,message:"internal Server Error",error
+  })
+}
+}
+
+
+export { addDoctor, loginAdmin,allDoctors,apppointmentsAdmin,appointmentCancel,adminDashBoard};

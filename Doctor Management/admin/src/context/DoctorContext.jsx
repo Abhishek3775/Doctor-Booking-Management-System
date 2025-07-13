@@ -1,12 +1,15 @@
 import React, { createContext } from 'react'
+import { useState } from 'react';
 
 const Doctorcontext = createContext();
 
 const DoctorcontextProvider = (props) => {
 
-    const value = {
+   
+   const value = {
+    
+   }
 
-    }
 
   return (
     <Doctorcontext.Provider value={value}>

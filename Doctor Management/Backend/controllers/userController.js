@@ -6,7 +6,7 @@ import { v2 as cloudinary } from "cloudinary";
 import doctorModel from "../models/DoctorModel.js";
 import appointmentModel from "../models/appointmentModel.js";
 import Razorpay from "razorpay";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 // Api to register user
 
@@ -99,19 +99,24 @@ export const userProfile = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   try {
+    
     const { userId, name, phone, address, dob, gender } = req.body;
-    const imageFile = req.imageFile;
+    const imageFile = req.file;
     if (!name || !phone || !address || !dob || !gender) {
       return res.json({ success: false, message: "Data Missing" });
     }
 
-    await userModel.findByIdAndUpdate(userId, {
+    const updatedData = await userModel.findByIdAndUpdate(userId, {
       name,
       phone,
-      address: JSON.parse(address),
+      address,
       dob,
       gender,
+    },{
+      new:true
     });
+
+    
 
     if (imageFile) {
       //upload image to cloudinary
@@ -120,12 +125,16 @@ export const updateProfile = async (req, res) => {
       });
       const imageURL = imageUpload.secure_url;
       await userModel.findByIdAndUpdate(userId, { image: imageURL });
-
-      res.json({ success: true, message: "profile uploaded successfully!" });
     }
+    return res.json({
+      success: true,
+      message: "profile uploaded successfully!",
+      updatedData,
+      image:"image File Data ;",imageFile
+    });
   } catch (error) {
     console.log(error);
-    res.json({ success: false, message: error.message });
+    return res.json({ success: false, message: error.message });
   }
 };
 
@@ -232,6 +241,7 @@ export const bookAppointment = async (req, res) => {
         name: userData.name,
         email: userData.email,
         phone: userData.phone,
+        image:userData.image
       },
       docData: {
         name: docData.name,
@@ -347,7 +357,6 @@ const razorpayInstance = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-
 export const paymentRazorpay = async (req, res) => {
   try {
     const { appointmentId } = req.body;
@@ -365,7 +374,9 @@ export const paymentRazorpay = async (req, res) => {
 
     const amount = appointmentData?.amount || appointmentData?.docData?.fees;
     if (!amount) {
-      return res.status(400).json({ success: false, message: "Amount is missing in appointment" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Amount is missing in appointment" });
     }
 
     const options = {
@@ -390,23 +401,23 @@ export const paymentRazorpay = async (req, res) => {
   }
 };
 
-
 //api to verify payment of razorpay
 
-export const verifyRazorpay = async (req,res)=>{
+export const verifyRazorpay = async (req, res) => {
   try {
-    const {razorpay_order_id} = req.body;
+    const { razorpay_order_id } = req.body;
     const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id);
-    // console.log(orderInfo); 
-    if(orderInfo.status === 'paid'){
-await appointmentModel.findByIdAndUpdate(orderInfo.receipt,{payment:true})
-res.json({success:true,message:"payment successful"})
-    }else{
-      res.json({success:false,message:"payment failed"})
+    // console.log(orderInfo);
+    if (orderInfo.status === "paid") {
+      await appointmentModel.findByIdAndUpdate(orderInfo.receipt, {
+        payment: true,
+      });
+      res.json({ success: true, message: "payment successful" });
+    } else {
+      res.json({ success: false, message: "payment failed" });
     }
-    
   } catch (error) {
     console.log(error);
-    res.json({success:false,message:error.message})
+    res.json({ success: false, message: error.message });
   }
-}
+};

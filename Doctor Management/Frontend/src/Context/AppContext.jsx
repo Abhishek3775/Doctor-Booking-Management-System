@@ -136,7 +136,9 @@ const AppContextProvider = ({ children }) => {
         },
       });
 
+
       if (data.success) {
+        // console.log('user profile data is fetched successfully!',data)
         setUserData(data.userData); // Save user profile
       } else {
         toast.error(data.message); // Show error toast
