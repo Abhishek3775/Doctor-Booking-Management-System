@@ -23,8 +23,6 @@ function DoctorAppointments() {
 
   // console.log("doctor token is fetching",doctorToken)
 
-  
-
   useEffect(() => {
     fetchAppointmentsForDoctors();
   }, [doctorToken]);

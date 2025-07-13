@@ -46,7 +46,7 @@ const navigate = useNavigate();
         console.log("no data found");
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error("Failed to fetch appointments");
     }
   };
@@ -71,13 +71,13 @@ const navigate = useNavigate();
         toast.success(data.message);
         getUsersAppointments(); // refresh
       } else {
-        console.log("Error from response:", data);
+        // console.log("Error from response:", data);
         toast.error(data.message);
       }
 
       console.log("Cancelled ID:", appointmentId);
     } catch (error) {
-      console.log("Axios Error:", error);
+      // console.log("Axios Error:", error);
       toast.error(error.response?.data?.message || error.message);
     }
   };
@@ -94,7 +94,7 @@ const navigate = useNavigate();
       order_id: order.id,
       receipt: order.receipt,
       handler: async (response) => {
-        console.log(response);
+        // console.log(response);
 
         try {
           const { data } = await axios.post(
@@ -108,7 +108,7 @@ const navigate = useNavigate();
             navigate('/myAppointments')
           }
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           toast.error(error.message)
         }
       },
@@ -122,7 +122,7 @@ const navigate = useNavigate();
     try {
       const { data } = await axios.post(
         "http://localhost:9000/api/user/paymentRazorpay",
-        { appointmentId }, // You're sending only appointmentId here
+        { appointmentId }, // we're sending only appointmentId here
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -133,7 +133,7 @@ const navigate = useNavigate();
         // console.log(data.order)
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.message);
     }
   };

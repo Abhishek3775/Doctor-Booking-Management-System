@@ -11,7 +11,7 @@ const authAdmin = async (req, res, next) => {
         const adminToken = authHeader.split(" ")[1];
         const tokenDecode = jwt.verify(adminToken, process.env.JWT_SECRET);
 
-        // ✅ Fix: Check the auth property inside decoded token
+        // Check the auth property inside decoded token
         if (tokenDecode.auth !== process.env.ADMIN_EMAIL + process.env.ADMIN_PASSWORD) {
             console.log("authentication revoked");
             return res.status(401).json({ success: false, message: "Authentication failed" });

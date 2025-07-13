@@ -149,7 +149,8 @@ const AdminContextProvider = (props) => {
 
   if(data.success){
     // console.log(data)
-    toast.success(data.message)
+  
+    toast.success(data.message || "appointment Completed")
     fetchAppointmentsForDoctors()
   }else{
      toast.error(error?.response?.data?.message || "Error completing appointment");

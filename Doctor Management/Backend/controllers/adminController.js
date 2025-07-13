@@ -87,7 +87,7 @@ const addDoctor = async (req, res) => {
 
     res.json({success:true,message:"doctor added successfully"})
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     res.status(400).json({success:false,message:error.message})
   }
 };
@@ -121,7 +121,7 @@ const allDoctors = async (req,res)=>{
     res.json({success:true,doctors})
     
   } catch (error) {
-    console.log(error)
+    // console.log(error)
      res.status(500).json({ success: false, message: error.message });
   }
 }
@@ -134,7 +134,7 @@ const apppointmentsAdmin = async (req,res)=>{
     return res.status(200).json({success:true,appointments})
 
   } catch (error) {
-     console.log(error)
+    //  console.log(error)
      res.status(500).json({ success: false, message: error.message });
   }
 }
@@ -144,7 +144,7 @@ const apppointmentsAdmin = async (req,res)=>{
  const appointmentCancel = async (req, res) => {
   try {
     const { appointmentId } = req.body;
-     console.log("appointment id ",appointmentId)
+    //  console.log("appointment id ",appointmentId)
     let appointmentData = await appointmentModel.findById(appointmentId);
     if (!appointmentData) {
       return res
@@ -152,12 +152,12 @@ const apppointmentsAdmin = async (req,res)=>{
         .json({ success: false, message: "Appointment not found" });
     }
 
-    // ✅ Mark as cancelled
+    // Mark as cancelled
     await appointmentModel.findByIdAndUpdate(appointmentId, {
       cancelled: true,
     });
 
-    // ✅ release doctor slot
+    // release doctor slot
     const { docId, slotDate, slotTime } = appointmentData;
     const doctorData = await doctorModel.findById(docId);
     if (doctorData && doctorData.slots_booked[slotDate]) {
@@ -171,7 +171,7 @@ const apppointmentsAdmin = async (req,res)=>{
 
     return res.json({ success: true, message: "Appointment Cancelled" });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res
       .status(500)
       .json({ success: false, message: "Internal server error", error });
@@ -197,7 +197,7 @@ try {
 
   
 } catch (error) {
-  console.log(error);
+  // console.log(error);
   return res.status(500).json({success:false,message:"internal Server Error",error
   })
 }

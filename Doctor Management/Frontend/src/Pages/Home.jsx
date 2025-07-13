@@ -1,3 +1,4 @@
+//this is home page where we render all the components
 import React from 'react'
 import Header from '../Components/Header'
 import Speciality from '../Components/Speciality'

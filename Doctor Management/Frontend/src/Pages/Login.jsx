@@ -14,15 +14,14 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  // const backendUrl = import.meta.env.VITE_BACKEND_URL
-  console.log("backend url is",backendUrl)
+  // console.log("backend url is",backendUrl)
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log("name",name);
-    console.log("email",email);
-    console.log("password",password)
-    console.log(e);
+    // console.log("name",name);
+    // console.log("email",email);
+    // console.log("password",password)
+    // console.log(e);
 
     try {
       if(state == 'Sign Up'){
@@ -39,7 +38,7 @@ const Login = () => {
       }
       else{
         const {data} = await axios.post(backendUrl + '/api/user/userLogin',{password,email})
-        console.log("Signup response:", data);
+        // console.log("Signup response:", data);
 
         if(data.success){
           localStorage.setItem('token',data.token)

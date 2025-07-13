@@ -32,7 +32,7 @@ function Footer() {
         </ul>
       </div>
       <hr />
-      <p className='text-center' style={{ wordSpacing: "0.3rem" }}>This Website is Developed By Abhishek</p>
+      <p className='text-center' style={{ wordSpacing: "0.3rem" }}>This Website is Developed By <b>Abhishek Rajput ♡</b></p>
     </div>
   )
 }

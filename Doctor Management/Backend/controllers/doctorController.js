@@ -9,8 +9,8 @@ const doctorList = async (req, res) => {
     const doctors = await doctorModel.find({}).select("-password");
     res.json({ success: true, doctors });
   } catch (error) {
-    console.log(error);
-    console.log({ success: false, message: error.message });
+    // console.log(error);
+    res.json({ success: false, message: error.message });
   }
 };
 
@@ -38,7 +38,7 @@ const loginDoctor = async (req, res) => {
         return res.status(401).json({success:false,message:"Wrong Password"})
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res
       .status(500)
       .json({ success: false, message: "internal server error", error });
@@ -51,14 +51,14 @@ const appointmentsDoctor = async (req,res)=>{
 try {
     const docId = req.docId;//extracting from the doctor token 
     const appointments = await appointmentModel.find({docId});
-    console.log(appointments)
+    // console.log(appointments)
     return res.status(200).json({success:true,message:"appointment fetched",
         appointments
     })
     
     
 } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({success:false,message:"internal server error",error})
 }
 }
@@ -76,7 +76,7 @@ const doctorProfile = async (req,res)=>{
         })
         
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return res.status(500).json({success:false,message:"internal server error"})
     }
 }
@@ -129,7 +129,7 @@ const updateDoctorProfile = async (req, res) => {
       updatedData
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return res.status(500).json({ success: false, message: error.message });
   }
 };
@@ -167,7 +167,7 @@ if(!patients.includes(item.userId)){
     
   return res.status(200).json({success:true,dashData})
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return res.status(500).json({ success: false, message: error.message });
   }
 }
@@ -185,12 +185,12 @@ const appointmentCancelFromDocSide = async (req, res) => {
         .json({ success: false, message: "Appointment not found" });
     }
 
-    // ✅ Mark as cancelled
+    // Mark as cancelled
     await appointmentModel.findByIdAndUpdate(appointmentId, {
       cancelled: true,
     });
 
-    // ✅ release doctor slot
+    // release doctor slot
     const { docId, slotDate, slotTime } = appointmentData;
     const doctorData = await doctorModel.findById(docId);
     if (doctorData && doctorData.slots_booked[slotDate]) {
@@ -204,7 +204,7 @@ const appointmentCancelFromDocSide = async (req, res) => {
 
     return res.json({ success: true, message: "Appointment Cancelled" });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res
       .status(500)
       .json({ success: false, message: "Internal server error", error });
@@ -224,12 +224,12 @@ const completeAppointment = async (req,res)=>{
         .json({ success: false, message: "Appointment not found" });
     }
 
-    // ✅ Mark as cancelled
+    // Mark as cancelled
     await appointmentModel.findByIdAndUpdate(appointmentId, {
       isCompleted: true,
     });
 
-    // ✅ release doctor slot
+    // release doctor slot
     const { docId, slotDate, slotTime } = appointmentData;
     const doctorData = await doctorModel.findById(docId);
     if (doctorData && doctorData.slots_booked[slotDate]) {
@@ -243,7 +243,7 @@ const completeAppointment = async (req,res)=>{
 
     return res.json({ success: true, message: "Appointment Completed" });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res
       .status(500)
       .json({ success: false, message: "Internal server error", error });
@@ -258,10 +258,10 @@ const getAllAppointmentsFromDocSide = async (req,res)=>{
     return res.status(200).json({success:true,appointments})
 
   } catch (error) {
-     console.log(error)
+    //  console.log(error)
      res.status(500).json({ success: false, message: error.message });
   }
 }
   
 
-export { doctorList,loginDoctor,appointmentsDoctor,doctorProfile,updateDoctorProfile,doctorDashboard,appointmentCancelFromDocSide,completeAppointment};
+export { doctorList,loginDoctor,appointmentsDoctor,doctorProfile,updateDoctorProfile,doctorDashboard,appointmentCancelFromDocSide,completeAppointment,getAllAppointmentsFromDocSide};

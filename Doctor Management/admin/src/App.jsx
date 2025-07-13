@@ -11,6 +11,7 @@ import DoctorsLIst from "./pages/admin/DoctorsLIst";
 import DoctorDashboard from "./pages/Doctor/DoctorDashboard";
 import DoctorAppointments from "./pages/Doctor/DoctorAppointments";
 import DoctorProfile from "./pages/Doctor/DoctorProfile";
+import { ToastContainer, toast } from 'react-toastify';
 import FakeCompo from "./components/FakeCompo";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
 
   return adminToken || doctorToken ? (
     <div className="bg-[#f8f9fd]-600">
+        <ToastContainer/>
       <Navbar />
       <div className="flex items-start">
         

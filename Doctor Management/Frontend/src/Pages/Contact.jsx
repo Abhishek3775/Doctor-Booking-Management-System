@@ -1,3 +1,5 @@
+
+//This is contact us page for the website
 import React from 'react'
 import { assets } from '../assets/assets'
 import Footer from '../Components/Footer'

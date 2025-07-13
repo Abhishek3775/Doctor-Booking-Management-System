@@ -7,7 +7,7 @@ const authUser = async (req, res, next) => {
     console.log("Auth Header:", authHeader);
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      console.log("❌ No Bearer token found");
+      console.log("No Bearer token found");
       return res.status(401).json({ success: false, message: "No token, login again" });
     }
 
@@ -24,7 +24,7 @@ const authUser = async (req, res, next) => {
     req.userId = tokenDecode.id;
     next();
   } catch (error) {
-    console.error("❌ Token verification failed:",error, error.message);
+    console.error(" Token verification failed:",error, error.message);
     return res.status(401).json({ success: false, message: "Invalid or expired token" });
   }
 };
