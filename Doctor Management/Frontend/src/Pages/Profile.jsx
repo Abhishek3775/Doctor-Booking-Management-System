@@ -28,10 +28,10 @@ function Profile() {
       if (image) {
         formData.append("image", image);
       }
-      console.log("form DAta",formData)
-      for (let pair of formData.entries()) {
-  console.log(`${pair[0]}: ${pair[1]}`);
-}
+//       console.log("form DAta",formData)
+//       for (let pair of formData.entries()) {
+//   console.log(`${pair[0]}: ${pair[1]}`);
+// }
 
       const { data } = await axios.post("http://localhost:9000/api/user/update-profile",
         formData,
