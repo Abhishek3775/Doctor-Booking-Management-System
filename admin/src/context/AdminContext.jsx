@@ -13,7 +13,7 @@ const AdminContextProvider = (props) => {
       : ""
   );
 
-  const backendUrl = `http://localhost:9000`;
+  const backendUrl = `https://doctor-booking-management-system.onrender.com`;
 
   const [doctors, setDoctors] = useState([]);
   const [appointments,setAppointments] = useState([]);
