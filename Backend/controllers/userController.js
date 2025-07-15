@@ -17,10 +17,18 @@ export const registerUser = async (req, res) => {
       return res.json({ success: false, message: "Missing Details" });
     }
 
+    // Check if user already exists with this email
+    const existingUser = await userModel.findOne({ email });
+    if (existingUser) {
+      return res.json({ success: false, message: "Email already registered" });
+    }
+
+
     //validating email format
     if (!validator.isEmail(email)) {
       return res.json({ success: false, message: "enter a valid email " });
     }
+
 
     //validating strong password
     if (password.length < 8) {
