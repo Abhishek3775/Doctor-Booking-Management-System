@@ -22,11 +22,7 @@ const Login = () => {
     setLoading(true);
 
     // Simulate async request (e.g., axios call)
-    setTimeout(() => {
-      setLoading(false);
-      // alert(`${state} success`);
-    }, 2000);
-  };
+  setLoading(true)
     // console.log("name",name);
     // console.log("email",email);
     // console.log("password",password)
@@ -67,6 +63,9 @@ const Login = () => {
       }
     } catch (error) {
       toast.error(error.message);
+    }
+    finally{
+      setLoading(false)
     }
   };
 
