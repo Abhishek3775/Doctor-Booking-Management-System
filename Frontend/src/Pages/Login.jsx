@@ -14,14 +14,24 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [phone,setPhone] = useState("");
+  const [loading,setLoading] = useState(false)
   // console.log("backend url is",backendUrl)
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
+    // Simulate async request (e.g., axios call)
+    setTimeout(() => {
+      setLoading(false);
+      // alert(`${state} success`);
+    }, 2000);
+  };
     // console.log("name",name);
     // console.log("email",email);
     // console.log("password",password)
     // console.log(e);
+
 
     try {
       if (state === "Sign Up") {
@@ -146,9 +156,19 @@ const Login = () => {
           />
         </div>
 
-        <button className="bg-blue-600 text-white w-full py-2 rounded-md cursor-pointer">
-          {state === "Sign Up" ? "Create Account " : "Login"}
-        </button>
+        <button
+        type="submit"
+        className="bg-blue-600 text-white w-full py-2 rounded-md cursor-pointer"
+        disabled={loading}
+      >
+        {loading
+          ? state === "Sign Up"
+            ? "Creating Account..."
+            : "Logging..."
+          : state === "Sign Up"
+          ? "Create Account"
+          : "Login"}
+      </button>
         {state === "Sign Up" ? (
           <p>
             Already have an Account ?{" "}
