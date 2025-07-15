@@ -39,8 +39,8 @@ const Login = () => {
           toast.error(data.message);
         }
       } else {
-        console.log("backend url aa rha hai ", backendUrl);
-        console.log("sending login data", { email, password });
+        // console.log("backend url aa rha hai ", backendUrl);
+        // console.log("sending login data", { email, password });
 
         const { data } = await axios.post(backendUrl + "/api/user/userLogin", {
           password,

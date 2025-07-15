@@ -298,8 +298,8 @@ export const cancelAppointment = async (req, res) => {
 
 //api to pay the appointment fees using RAZORPAY PAYMENT GATEWAY
 
-console.log("KEY_ID:", process.env.RAZORPAY_KEY_ID); // Should not be undefined
-console.log("KEY_SECRET:", process.env.RAZORPAY_KEY_SECRET);
+// console.log("KEY_ID:", process.env.RAZORPAY_KEY_ID); // Should not be undefined
+// console.log("KEY_SECRET:", process.env.RAZORPAY_KEY_SECRET);
 
 const razorpayInstance = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -309,10 +309,10 @@ const razorpayInstance = new Razorpay({
 export const paymentRazorpay = async (req, res) => {
   try {
     const { appointmentId } = req.body;
-    console.log(" Appointment ID received:", appointmentId);
+    // console.log(" Appointment ID received:", appointmentId);
 
     const appointmentData = await appointmentModel.findById(appointmentId);
-    console.log(" Appointment Data:", appointmentData);
+    // console.log(" Appointment Data:", appointmentData);
 
     if (!appointmentData || appointmentData.cancelled) {
       return res.json({
@@ -334,14 +334,14 @@ export const paymentRazorpay = async (req, res) => {
       receipt: appointmentId,
     };
 
-    console.log(" Creating Razorpay order with options:", options);
+    // console.log(" Creating Razorpay order with options:", options);
 
     const order = await razorpayInstance.orders.create(options);
-    console.log(" Razorpay order created:", order);
+    // console.log(" Razorpay order created:", order);
 
     res.json({ success: true, order });
   } catch (error) {
-    console.error(" Razorpay Order Creation Failed:", error);
+    // console.error(" Razorpay Order Creation Failed:", error);
     return res.status(500).json({
       success: false,
       message: "Internal Server Error",
