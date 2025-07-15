@@ -45,7 +45,7 @@ const AppContextProvider = ({ children }) => {
     try {
       const { data } = await axios.get(`${backendUrl}/api/user/get-profile`, {
         headers: {
-          Authorization: `Bearer ${token}`, // ✅ Attach token in Authorization header
+          Authorization: `Bearer ${token}`, // Attach token in Authorization header
         },
       });
 

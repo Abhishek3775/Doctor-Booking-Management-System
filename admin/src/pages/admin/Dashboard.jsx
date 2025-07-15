@@ -14,8 +14,7 @@ const Dashboard = () => {
    appointmentCancel,
     getDashData,adminToken,slotDateFormat} = useContext(AdminContext)
 
-
-    console.log("dashboard data ",dashData.latestAppointments)
+    // console.log("dashboard data ",dashData.latestAppointments)
 
     useEffect(()=>{
 if(adminToken){

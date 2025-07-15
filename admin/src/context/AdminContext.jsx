@@ -46,9 +46,9 @@ const AdminContextProvider = (props) => {
 
   const getAllAppointments = async () => {
     try {
-      const { data } = await axios.get("http://localhost:9000/api/admin/appointments", {
+      const { data } = await axios.get(`${backendUrl}/api/admin/appointments`, {
         headers: {
-          Authorization: `Bearer ${adminToken}`, // ✅ Attach token in Authorization header
+          Authorization: `Bearer ${adminToken}`, //  Attach token in Authorization header
         },
       });
 
@@ -117,7 +117,7 @@ const AdminContextProvider = (props) => {
       console.log("doctor token is fetching",doctorToken)
   const {data} = await axios.post(backendUrl+"/api/doctor/cancelAppointment",{appointmentId},{
     headers: {
-          Authorization: `Bearer ${doctorToken}`, // ✅ Attach token in Authorization header
+          Authorization: `Bearer ${doctorToken}`, //  Attach token in Authorization header
         },
   }
   )
@@ -142,7 +142,7 @@ const AdminContextProvider = (props) => {
       console.log("doctor token is fetching",doctorToken)
   const {data} = await axios.post(backendUrl+"/api/doctor/completeAppointment",{appointmentId},{
     headers: {
-          Authorization: `Bearer ${doctorToken}`, // ✅ Attach token in Authorization header
+          Authorization: `Bearer ${doctorToken}`, //  Attach token in Authorization header
         },
   }
   )

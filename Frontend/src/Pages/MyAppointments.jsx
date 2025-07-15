@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const MyAppointments = () => {
-  const { token } = useContext(DoctorContext);
+  const { token,backendUrl } = useContext(DoctorContext);
 
   const [appointments, setAppointments] = useState([]);
 const navigate = useNavigate();
@@ -35,7 +35,7 @@ const navigate = useNavigate();
   const getUsersAppointments = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:9000/api/user/getAppointments",
+        `${backendUrl}/api/user/getAppointments`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -62,7 +62,7 @@ const navigate = useNavigate();
   const cancelAppointment = async (appointmentId) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:9000/api/user/cancelAppointment",
+        `${backendUrl}/api/user/cancelAppointment`,
         { appointmentId }, // You're sending only appointmentId here
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -98,7 +98,7 @@ const navigate = useNavigate();
 
         try {
           const { data } = await axios.post(
-            "http://localhost:9000/api/user/verifyRazorpay",
+            `${backendUrl}/api/user/verifyRazorpay`,
             response,
             { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -121,7 +121,7 @@ const navigate = useNavigate();
   const appointmentRazorpay = async (appointmentId) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:9000/api/user/paymentRazorpay",
+        `${backendUrl}/api/user/paymentRazorpay`,
         { appointmentId }, // we're sending only appointmentId here
         { headers: { Authorization: `Bearer ${token}` } }
       );

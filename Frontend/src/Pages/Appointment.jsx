@@ -39,7 +39,7 @@ function Appointment() {
       let slotDate = day + "_" + month + "_" + year;
 
       const { data } = await axios.post(
-        "http://localhost:9000/api/user/book-appointment",
+        `${backendUrl}/api/user/book-appointment`,
         { docId, slotDate, slotTime },
         {headers:{Authorization:`Bearer ${token}`}}
       );

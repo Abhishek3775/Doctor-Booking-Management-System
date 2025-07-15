@@ -14,7 +14,7 @@ const Doctors = () => {
 
   function filterDoctors(doctorsSpeciality){
     let updatedDoctorsList = doctors.filter((doctor)=>(doctor.speciality === doctorsSpeciality))
-    setDoctor(updatedDoctorsList);
+    setDoctors(updatedDoctorsList);
   }
 
   

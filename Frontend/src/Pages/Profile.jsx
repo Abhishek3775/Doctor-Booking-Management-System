@@ -5,8 +5,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 function Profile() {
-  const backendUrl = "http://localhost:9000";
-  const { userData, setUserData, token, loadUserProfileData } =
+
+  const { userData, setUserData, token, loadUserProfileData,backendUrl } =
     useContext(DoctorContext);
 
   const [isEdit, setIsEdit] = useState(false);
@@ -33,7 +33,7 @@ function Profile() {
 //   console.log(`${pair[0]}: ${pair[1]}`);
 // }
 
-      const { data } = await axios.post("http://localhost:9000/api/user/update-profile",
+      const { data } = await axios.post(`${backendUrl}/api/user/update-profile`,
         formData,
         {
           headers: {
