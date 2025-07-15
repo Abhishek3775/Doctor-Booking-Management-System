@@ -1,5 +1,5 @@
 import validator from "validator";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import { v2 as cloudinary } from "cloudinary";
@@ -55,6 +55,8 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+    // console.log("sending login data", { email, password });
+
     const user = await userModel.findOne({ email });
     if (!user) {
       return res
@@ -74,7 +76,7 @@ export const loginUser = async (req, res) => {
       });
     }
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };

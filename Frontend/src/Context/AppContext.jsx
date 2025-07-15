@@ -22,6 +22,7 @@ const AppContextProvider = ({ children }) => {
 
   // Get backend URL from .env file
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  // const backendUrl = "http://localhost:9000"
 
   // 3. Fetch list of doctors from the backend
   const getDoctorsData = async () => {
@@ -100,7 +101,8 @@ const AppContextProvider = ({ children }) => {
         token,              // JWT token
         setToken,           // Function to update token
         userData,           // Logged-in user data
-        setUserData,        // Function to update user data
+        setUserData,
+        backendUrl,        // Function to update user data
         loadUserProfileData // Function to re-fetch user data manually
       }}
     >
