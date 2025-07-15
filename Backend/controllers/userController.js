@@ -11,10 +11,11 @@ dotenv.config();
 // Api to register user
 
 export const registerUser = async (req, res) => {
+
   try {
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) {
-      return res.json({ success: false, message: "Missing Details" });
+    const { name, email, phone, password } = req.body;
+    if (!name || !email || !password || !phone ) {
+      return res.json({ success: false, message: "Missing Details"});
     }
 
     // Check if user already exists with this email
@@ -23,17 +24,24 @@ export const registerUser = async (req, res) => {
       return res.json({ success: false, message: "Email already registered" });
     }
 
-
     //validating email format
     if (!validator.isEmail(email)) {
       return res.json({ success: false, message: "enter a valid email " });
     }
 
-
     //validating strong password
     if (password.length < 8) {
-      return res.json({ success: false, message: "enter a strong password" });
+      return res.json({ success: false, message: "password minimum length is 8" });
     }
+
+    //uploading image file at the time of the register
+
+    const imageFile = req.file;
+    const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
+      resource_type: "image",
+    });
+
+    const imageURL = imageUpload.secure_url;
 
     //async user password
 
@@ -43,6 +51,8 @@ export const registerUser = async (req, res) => {
     const userData = {
       name,
       email,
+      phone,
+      image: imageURL,
       password: hashedPassword,
     };
 
@@ -51,7 +61,8 @@ export const registerUser = async (req, res) => {
     //_id by using this property we will create the token _id is provided by the database
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    res.json({ success: true, token });
+   return res.json({ success: true, token,
+      user: userData });
   } catch (error) {
     // console.log(error);
     res.json({ success: false, message: error.message });
@@ -109,24 +120,25 @@ export const userProfile = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   try {
-    
     const { userId, name, phone, address, dob, gender } = req.body;
     const imageFile = req.file;
     if (!name || !phone || !address || !dob || !gender) {
       return res.json({ success: false, message: "Data Missing" });
     }
 
-    const updatedData = await userModel.findByIdAndUpdate(userId, {
-      name,
-      phone,
-      address,
-      dob,
-      gender,
-    },{
-      new:true
-    });
-
-    
+    const updatedData = await userModel.findByIdAndUpdate(
+      userId,
+      {
+        name,
+        phone,
+        address,
+        dob,
+        gender,
+      },
+      {
+        new: true,
+      }
+    );
 
     if (imageFile) {
       //upload image to cloudinary
@@ -140,7 +152,8 @@ export const updateProfile = async (req, res) => {
       success: true,
       message: "profile uploaded successfully!",
       updatedData,
-      image:"image File Data ;",imageFile
+      image: "image File Data ;",
+      imageFile,
     });
   } catch (error) {
     console.log(error);
@@ -149,8 +162,6 @@ export const updateProfile = async (req, res) => {
 };
 
 //api to boook the appointment details
-
-
 
 export const bookAppointment = async (req, res) => {
   try {
@@ -190,7 +201,7 @@ export const bookAppointment = async (req, res) => {
         name: userData.name,
         email: userData.email,
         phone: userData.phone,
-        image:userData.image
+        image: userData.image,
       },
       docData: {
         name: docData.name,

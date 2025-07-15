@@ -12,6 +12,7 @@ function Profile() {
 
   const [isEdit, setIsEdit] = useState(false);
   const [image, setImage] = useState(false);
+  
 
   const updateUserProfileData = async () => {
 

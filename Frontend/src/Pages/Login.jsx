@@ -1,42 +1,61 @@
+
+
+
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { DoctorContext } from "../Context/AppContext";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { assets } from "../assets/assets";
 
 const Login = () => {
-  const { token, setToken } = useContext(DoctorContext);
+  const { token, setToken, userData } = useContext(DoctorContext);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
   const [state, setState] = useState("Sign Up");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [phone,setPhone] = useState("");
-  const [loading,setLoading] = useState(false)
-  // console.log("backend url is",backendUrl)
+  const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState(false);
+  // console.log("backend url is", backendUrl)
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     // Simulate async request (e.g., axios call)
-  setLoading(true)
+    setLoading(true);
     // console.log("name",name);
     // console.log("email",email);
     // console.log("password",password)
     // console.log(e);
 
-
     try {
       if (state === "Sign Up") {
-        const { data } = await axios.post(backendUrl + "/api/user/register", {
-          name,
-          password,
-          email,
-          phone,
-        });
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("password", password);
+        formData.append("email", email);
+        formData.append("phone", phone);
+        if (image) {
+          formData.append("image", image);
+        }
+
+        const { data } = await axios.post(
+          backendUrl + "/api/user/register",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        // console.log("data sending from frontend", { data });
+
         if (data.success) {
           localStorage.setItem("token", data.token);
           toast.success("token set successfully!");
@@ -48,11 +67,14 @@ const Login = () => {
         // console.log("backend url aa rha hai ", backendUrl);
         // console.log("sending login data", { email, password });
 
-        const { data } = await axios.post(backendUrl + "/api/user/userLogin", {
-          password,
-          email,
-        });
-        console.log("Signup response:", data);
+        const { data } = await axios.post(
+          backendUrl + "/api/user/userLogin",
+          {
+            password,
+            email,
+          }
+        );
+        console.log("Login Response:", data);
 
         if (data.success) {
           localStorage.setItem("token", data.token);
@@ -63,9 +85,8 @@ const Login = () => {
       }
     } catch (error) {
       toast.error(error.message);
-    }
-    finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -88,7 +109,6 @@ const Login = () => {
 
         {state === "Sign Up" && (
           <div className="w-full">
-
             <div className="w-full">
               <p>Full Name</p>
               <input
@@ -104,12 +124,11 @@ const Login = () => {
             </div>
 
             {/* //this is for the phone number */}
-
-                <div className="w-full">
+            <div className="w-full">
               <p>Enter Phone Number</p>
               <input
                 placeholder="Enter the Phone Number"
-             className="border border-zinc-300 rounded w-full  p-2"
+                className="border border-zinc-300 rounded w-full  p-2"
                 type="Number"
                 value={phone}
                 required
@@ -119,11 +138,31 @@ const Login = () => {
               />
             </div>
 
-            {/* //this is for the date of birth */}
-
-
-
-
+            {/* //this is for the image of the user */}
+            <div className="flex flex-col items-center space-y-4">
+              <label htmlFor="image" className="cursor-pointer">
+                select to upload profile image
+                <div className="relative w-24 h-24">
+                  <img
+                    src={
+                      image
+                        ? URL.createObjectURL(image)
+                        : userData?.image || assets.upload_area
+                    }
+                    alt="Profile image"
+                  />
+                </div>
+                <input
+                  onChange={(e) => {
+                    console.log(e.target.files[0]); // Check this
+                    setImage(e.target.files[0]);
+                  }}
+                  type="file"
+                  id="image"
+                  hidden
+                />
+              </label>
+            </div>
           </div>
         )}
 
@@ -156,18 +195,18 @@ const Login = () => {
         </div>
 
         <button
-        type="submit"
-        className="bg-blue-600 text-white w-full py-2 rounded-md cursor-pointer"
-        disabled={loading}
-      >
-        {loading
-          ? state === "Sign Up"
-            ? "Creating Account..."
-            : "Logging..."
-          : state === "Sign Up"
-          ? "Create Account"
-          : "Login"}
-      </button>
+          type="submit"
+          className="bg-blue-600 text-white w-full py-2 rounded-md cursor-pointer"
+          disabled={loading}
+        >
+          {loading
+            ? state === "Sign Up"
+              ? "Creating Account..."
+              : "Logging..."
+            : state === "Sign Up"
+            ? "Create Account"
+            : "Login"}
+        </button>
         {state === "Sign Up" ? (
           <p>
             Already have an Account ?{" "}
