@@ -39,7 +39,8 @@ const Doctors = () => {
                  <div key={index} className='border w-60 border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500 ease'
                   onClick={()=>{
                   navigate(`/MyAppointments/${item._id}`)
-                  console.log(item)}}>
+                  // console.log(item)
+                  }}>
                    
                          <img className='bg-blue-50' src={item.image} alt="" />
                         

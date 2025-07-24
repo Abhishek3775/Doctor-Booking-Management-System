@@ -36,7 +36,7 @@ const AppContextProvider = ({ children }) => {
         toast.error(data.message); // Show error toast if API failed
       }
     } catch (error) {
-      console.error(error.message);
+      // console.error(error.message);
       toast.error("Failed to load doctors data"); // Catch any network or server errors
     }
   };
@@ -58,7 +58,7 @@ const AppContextProvider = ({ children }) => {
         toast.error(data.message); // Show error toast
       }
     } catch (error) {
-      console.error(error.message);
+      // console.error(error.message);
       toast.error("Failed to load user profile"); // Catch auth or server errors
     }
   };
@@ -86,7 +86,7 @@ const AppContextProvider = ({ children }) => {
       }
       
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error)
     }
   }

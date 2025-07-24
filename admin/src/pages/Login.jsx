@@ -25,7 +25,7 @@ const Login = () => {
         if (data.success) {
           localStorage.setItem("adminToken", data.token);
           setAdminToken(data.token);
-          console.log("message", data.message);
+          // console.log("message", data.message);
           toast.success(data.message);
         } else {
           toast.error(data.message);
@@ -48,7 +48,7 @@ const Login = () => {
 
       }
     } catch (error) {
-      console.log("error yaha hai ",error);
+      // console.log("error yaha hai ",error);
       toast.error(error.response.data.message);
     }
     setIsSubmitting(false)

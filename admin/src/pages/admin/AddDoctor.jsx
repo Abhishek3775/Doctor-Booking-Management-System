@@ -51,8 +51,8 @@ const AddDoctor = () => {
 
       formData.forEach((value, key) => console.log(`${key} :${value}`));
 
-      console.log(backendUrl);
-      console.log("admintoken:", adminToken);
+      // console.log(backendUrl);
+      // console.log("admintoken:", adminToken);
 
       const { data } = await axios.post(
         backendUrl + "/api/admin/add-doctor",
@@ -78,9 +78,9 @@ const AddDoctor = () => {
       }
     } catch (error) {
       toast.error(error.message);
-      console.log(error);
+      // console.log(error);
     }
-    console.log(e);
+    // console.log(e);
   };
 
   return (

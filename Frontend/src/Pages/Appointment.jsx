@@ -47,15 +47,15 @@ function Appointment() {
 
       if (data.success) {
         toast.success(data.message);
-        console.log(data)
-        console.log(data.appointmentData.docData.address)
+        // console.log(data)
+        // console.log(data.appointmentData.docData.address)
         getDoctorsData();
         navigate("/MyAppointments");
       } else {
         toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.message);
     }
   };

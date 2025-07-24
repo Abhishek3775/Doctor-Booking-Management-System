@@ -75,7 +75,7 @@ const navigate = useNavigate();
         toast.error(data.message);
       }
 
-      console.log("Cancelled ID:", appointmentId);
+      // console.log("Cancelled ID:", appointmentId);
     } catch (error) {
       // console.log("Axios Error:", error);
       toast.error(error.response?.data?.message || error.message);
@@ -126,7 +126,7 @@ const navigate = useNavigate();
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      console.log(data.order);
+      // console.log(data.order);
 
       if (data.success) {
         initPay(data.order);

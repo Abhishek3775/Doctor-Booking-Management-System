@@ -24,7 +24,8 @@ function RelatedDoctors({docId,speciality}) {
                <div key={idxNum} className='border w-60 border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500 ease' onClick={()=>{
                  navigate(`/MyAppointments/${item._id}`)
                  scrollTo(0,0)
-                 console.log(idxNum,item)}}>
+                //  console.log(idxNum,item)
+                 }}>
                  
                        <img className='bg-blue-50' src={item.image} alt="" />
                       

@@ -26,7 +26,7 @@ function DoctorProfile() {
 
       setDoctorData(profile);
     } catch (error) {
-      console.log("Error while fetching doctor profile:", error);
+      // console.log("Error while fetching doctor profile:", error);
     }
   };
 
@@ -69,7 +69,7 @@ formData.append("address", doctorData.address);
         toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.response?.data?.message || error.message);
     }
   };

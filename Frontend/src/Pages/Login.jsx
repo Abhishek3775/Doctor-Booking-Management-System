@@ -74,7 +74,7 @@ const Login = () => {
             email,
           }
         );
-        console.log("Login Response:", data);
+        // console.log("Login Response:", data);
 
         if (data.success) {
           localStorage.setItem("token", data.token);
@@ -154,7 +154,7 @@ const Login = () => {
                 </div>
                 <input
                   onChange={(e) => {
-                    console.log(e.target.files[0]); // Check this
+                    // console.log(e.target.files[0]); // Check this
                     setImage(e.target.files[0]);
                   }}
                   type="file"

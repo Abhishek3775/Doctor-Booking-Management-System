@@ -51,12 +51,12 @@ function Profile() {
         await loadUserProfileData();
         setIsEdit(false);
       } else {
-        console.log(data)
-        console.log(data.message)
+        // console.log(data)
+        // console.log(data.message)
         toast.error(data.message);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.message);
     }
   };
@@ -85,7 +85,7 @@ function Profile() {
               </div>
               <input
                 onChange={(e) => {
-    console.log(e.target.files[0]); // Check this
+    // console.log(e.target.files[0]); // Check this
     setImage(e.target.files[0]);
   }}
                 type="file"
