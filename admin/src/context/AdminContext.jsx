@@ -61,7 +61,7 @@ const AdminContextProvider = (props) => {
         toast.error(error.message)
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.message)
     }
   };
@@ -81,7 +81,7 @@ const AdminContextProvider = (props) => {
         // console.log(data);
         setAppointments(data.appointments);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
 
@@ -105,7 +105,7 @@ const AdminContextProvider = (props) => {
     toast.error(data.message)
   }
 } catch (error) {
-  console.log(error)
+  // console.log(error)
   toast.error(error.message)
 }
   }
@@ -114,7 +114,7 @@ const AdminContextProvider = (props) => {
 
   const appointmentCancelFromDocSide = async (appointmentId)=>{
     try {
-      console.log("doctor token is fetching",doctorToken)
+      // console.log("doctor token is fetching",doctorToken)
   const {data} = await axios.post(backendUrl+"/api/doctor/cancelAppointment",{appointmentId},{
     headers: {
           Authorization: `Bearer ${doctorToken}`, //  Attach token in Authorization header
@@ -131,7 +131,7 @@ const AdminContextProvider = (props) => {
     toast.error(data.message)
   }
 } catch (error) {
-  console.log(error)
+  // console.log(error)
   toast.error(error.message)
 }
   }
@@ -139,7 +139,7 @@ const AdminContextProvider = (props) => {
   //complete the appointment 
   const completeAppointment = async (appointmentId)=>{
     try {
-      console.log("doctor token is fetching",doctorToken)
+      // console.log("doctor token is fetching",doctorToken)
   const {data} = await axios.post(backendUrl+"/api/doctor/completeAppointment",{appointmentId},{
     headers: {
           Authorization: `Bearer ${doctorToken}`, //  Attach token in Authorization header
@@ -156,7 +156,7 @@ const AdminContextProvider = (props) => {
      toast.error(error?.response?.data?.message || "Error completing appointment");
   }
 } catch (error) {
-  console.log(error)
+  // console.log(error)
  toast.error(error?.response?.data?.message || "Error completing appointment");
 }
   }
@@ -180,7 +180,7 @@ const AdminContextProvider = (props) => {
       }
       
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.message)
     }
   }
@@ -204,8 +204,8 @@ const AdminContextProvider = (props) => {
       }
 
     } catch (error) {
-      console.log(error);
-      console.log("error message",error.response.data.message)
+      // console.log(error);
+      // console.log("error message",error.response.data.message)
       toast.error(error.response.data.message || "failed")
     }
   }
