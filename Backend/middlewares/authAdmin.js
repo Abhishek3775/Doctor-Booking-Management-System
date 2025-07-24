@@ -13,7 +13,7 @@ const authAdmin = async (req, res, next) => {
 
         // Check the auth property inside decoded token
         if (tokenDecode.auth !== process.env.ADMIN_EMAIL + process.env.ADMIN_PASSWORD) {
-            console.log("authentication revoked");
+            // console.log("authentication revoked");
             return res.status(401).json({ success: false, message: "Authentication failed" });
         }
 

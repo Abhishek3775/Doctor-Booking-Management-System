@@ -22,7 +22,7 @@ const AddDoctor = () => {
   //    console.log("checking in localstorage:", localStorage.getItem("Admintoken") )
 
   const { backendUrl, adminToken } = useContext(AdminContext);
-  console.log("printing admintoken on 24 line0", adminToken);
+  // console.log("printing admintoken on 24 line0", adminToken);
 
   const onSubmitHandler = async (e) => {
     setButton("Adding Doctor");
