@@ -67,7 +67,7 @@ function DoctorDashboard() {
                     <p className='text-gray-600'>{slotDateFormat(item.slotDate)}</p>
                   </div>
       
-                   {item.cancelled ? <p className="text-red-400 text-xs font-medium">Cancelled</p> : 
+                   {/* {item.cancelled ? <p className="text-red-400 text-xs font-medium">Cancelled</p> : 
                                <img
                                 src={assets.cancel_icon}
                                 alt="Cancel"
@@ -76,7 +76,7 @@ function DoctorDashboard() {
                                   appointmentCancel(item._id)
                                 }}
                               />
-                              }
+                              } */}
       
                 </div>
       
